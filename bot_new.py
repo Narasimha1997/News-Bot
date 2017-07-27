@@ -32,3 +32,14 @@ def message_handler(event):
 @page.after_send
 def after_send(payload,response):
     print('complete')
+
+@app.route('/bot', methods=['GET'])
+def handle_verification():
+  print("Handling Verification.")
+  if request.args.get('hub.verify_token', '') == 'Hello':
+    print("Verification successful!")
+    return request.args.get('hub.challenge', '')
+  else:
+    print("Verification failed!")
+    return 'Error, wrong validation token'
+
