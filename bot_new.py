@@ -28,7 +28,7 @@ def message_handler(event):
     answer=getAnswer(messages)
     if answer=="":
         answer="Sorry! I didn't grasp it"
-    page.send(recipient_id=None,message=None)
+    page.send(recipient_id=sender_id,message=answer['result']['fulfilment']['speech'])
 
 
 @page.after_send
