@@ -26,6 +26,8 @@ def message_handler(event):
     print(messages)
     print('\t'+sender_id)
     answer=getAnswer(messages)
+    if answer=="":
+        answer="Sorry! I didn't grasp it"
     page.send(recipient_id=sender_id,message=answer['result']['fulfillment']['speech'])
 
 
