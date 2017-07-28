@@ -42,7 +42,7 @@ def message_handler(event):
     sender_id = event.sender_id
     messages = event.message_text
     dict_message=event.message
-    if 'attachemts' in dict_message
+    if 'attachemts' in dict_message:
         if dict_message['attachemts'][0]['type']=='location':
             coordinate_system=dict_message['entry'][0]['messaging'][0]['message']['attachemts'][0]['payload']['coordinate']
             lat_x=coordinate_system['lat']
