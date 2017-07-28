@@ -40,6 +40,7 @@ def handle_webhook():
 @page.handle_message
 def message_handler(event):
     sender_id = event.sender_id
+    messages = event.message_text
     answer=getAnswer(messages)
     if 'action' in answer['result']:
         handle_allActions(sender=sender_id, action=answer['result']['action'],ai_reply=answer)
