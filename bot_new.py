@@ -16,7 +16,7 @@ def handle_allActions(sender,action,ai_reply):
         reply=ai_reply['result']['fulfillment']['speech']
         if reply is None or reply=="":
             reply="Okay"
-            page.send(recipient_id=sender,message=reply)
+        page.send(recipient_id=sender,message=reply)
 
 
 def getAnswer(inputs):
