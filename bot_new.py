@@ -2,9 +2,15 @@ from flask import Flask, request
 from fbmq import Page, Attachment, QuickReply, Buttons
 import apiai
 import json
+import quickreplies as qr
 app=Flask(__name__)
 
 page=Page(page_access_token='EAAa7BshAslQBAAm0V8gZCA9dwlFjZC5bD5YYkhasmZBZC0nO2CMLV1K9aJY5r9VTFa6slwBQLGb1su8vhyoOLldsqKeYddHw7lP34fGJRHbWi0LXKotZCSKzP1djDp1FzR4X5oMmJk4iCYvIp60Ab5JVtMAIJGK1rScZAb4Caws78K2ueQdbEl')
+
+def handle_allActions(sender,action):
+    if action=='action.getNews':
+        smart_object=qr.get_news_quick_reply()
+        page.send(recipient_id=sender, message='Choose any one of these sources:',quick_replies=smart_object)
 
 def getAnswer(inputs):
     marvin=apiai.ApiAI(client_access_token='46139b1275564b1a8664f120e261fd17')
@@ -23,14 +29,14 @@ def handle_webhook():
 def message_handler(event):
     sender_id = event.sender_id
     messages = event.message_text
-    print(messages)
-    print('\t'+sender_id)
     answer=getAnswer(messages)
-    my_reply=answer['result']['fulfillment']['speech']
-    if my_reply is None or my_reply=="":
-       my_reply="Sorry"
-    page.send(recipient_id=sender_id,message=my_reply)
-
+    if 'action' in answer['result']:
+        handle_allActions(sender=sender_id, action=answer['result']['action'])
+    else:
+        reply=answer['result']['fulfillment']['speech']
+        if reply is None or reply=="":
+            reply='Sorry,I did not understand what you just said'
+        page.send(recipient_id=sender_id,message=reply)
 
 @page.after_send
 def after_send(payload,response):
@@ -46,3 +52,7 @@ def handle_verification():
     print("Verification failed!")
     return 'Error, wrong validation token'
 
+@page.callback(qr.quickreplies)
+def callback_picked_quickreply(payload,event):
+    sender_id=event.sender_id
+    page.send(recipient_id=sender_id,message=str(payload))
