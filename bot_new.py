@@ -42,8 +42,8 @@ def message_handler(event):
     sender_id = event.sender_id
     messages = event.message_text
     dict_message=event.message
-    if 'attachemts' in dict_message['entry'][0]['messaging'][0]['message']:
-        if dict_message['entry'][0]['messaging'][0]['message']['attachemts'][0]['type']=='location':
+    if 'attachemts' in dict_message
+        if dict_message['attachemts'][0]['type']=='location':
             coordinate_system=dict_message['entry'][0]['messaging'][0]['message']['attachemts'][0]['payload']['coordinate']
             lat_x=coordinate_system['lat']
             long_y=coordinate_system['long']
@@ -85,7 +85,7 @@ def callback_picked_quickreply(payload,event):
         smart_object=qr.get_news_quick_reply()
         page.send(recipient_id=sender_id, message='Choose any one of these sources:',quick_replies=smart_object)
     elif payload=='weather_hello':
-        smart_object=[{'content_type':'location','payload':'LOCATION'}]
+        smart_object=[{'content_type':'location'}]
         page.send(recipient_id=sender_id,message='Where?',quick_replies=smart_object)
     else:
         news_obj=news.get_news(payload)
