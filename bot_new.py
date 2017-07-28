@@ -57,4 +57,4 @@ def handle_verification():
 def callback_picked_quickreply(payload,event):
     sender_id=event.sender_id
     news_objects=news.get_news(sources=payload)
-    page.send(recipient_id=sender_id,Template.Generic(elements=news_objects))
+    page.send(sender_id,Template.Generic(elements=news_objects))
