@@ -14,7 +14,7 @@ def handle_allActions(sender,action,ai_reply):
         smart_object=qr.get_news_quick_reply()
         page.send(recipient_id=sender, message='Choose any one of these sources:',quick_replies=smart_object)
     elif action=='smalltalk.greetings.hello':
-        quickreply_mini=[QuickReply('news',payload='news_hello'),QuickReply('Weather',payload='weather_hello')]
+        quickreply_mini=[QuickReply('news',payload='news_hello')]
         message_ai=ai_reply['result']['fulfillment']['speech']
         page.send(recipient_id=sender,message=message_ai+'! Click on the button below, or you can simply text What is the news?',quick_replies=quickreply_mini)
     else:
@@ -40,16 +40,6 @@ def handle_webhook():
 @page.handle_message
 def message_handler(event):
     sender_id = event.sender_id
-    messages = event.message_text
-    dict_message=event.message
-    if 'attachemts' in dict_message:
-        if dict_message['attachemts'][0]['type']=='location':
-            coordinate_system=dict_message['entry'][0]['messaging'][0]['message']['attachemts'][0]['payload']['coordinate']
-            lat_x=coordinate_system['lat']
-            long_y=coordinate_system['long']
-            page.send(recipient_id=sender_id, message=str(lat_x)+" "+str(long_y))
-
-
     answer=getAnswer(messages)
     if 'action' in answer['result']:
         handle_allActions(sender=sender_id, action=answer['result']['action'],ai_reply=answer)
@@ -84,9 +74,6 @@ def callback_picked_quickreply(payload,event):
     if payload=='news_hello':
         smart_object=qr.get_news_quick_reply()
         page.send(recipient_id=sender_id, message='Choose any one of these sources:',quick_replies=smart_object)
-    elif payload=='weather_hello':
-        smart_object=[{'content_type':'location','title':'Location'}]
-        page.send(recipient_id=sender_id,message='Where?',quick_replies=smart_object)
     else:
         news_obj=news.get_news(payload)
         page.send(sender_id,Template.Generic(news_obj))
