@@ -1,8 +1,9 @@
 from flask import Flask, request
-from fbmq import Page, Attachment, QuickReply, Buttons
+from fbmq import Page, Attachment, QuickReply, Buttons, Template
 import apiai
 import json
 import quickreplies as qr
+import news
 app=Flask(__name__)
 
 page=Page(page_access_token='EAAa7BshAslQBAAm0V8gZCA9dwlFjZC5bD5YYkhasmZBZC0nO2CMLV1K9aJY5r9VTFa6slwBQLGb1su8vhyoOLldsqKeYddHw7lP34fGJRHbWi0LXKotZCSKzP1djDp1FzR4X5oMmJk4iCYvIp60Ab5JVtMAIJGK1rScZAb4Caws78K2ueQdbEl')
@@ -35,7 +36,7 @@ def message_handler(event):
     else:
         reply=answer['result']['fulfillment']['speech']
         if reply is None or reply=="":
-            reply='Sorry,I did not understand what you just said'
+            reply='Okay'
         page.send(recipient_id=sender_id,message=reply)
 
 @page.after_send
@@ -55,4 +56,5 @@ def handle_verification():
 @page.callback(qr.quickreplies)
 def callback_picked_quickreply(payload,event):
     sender_id=event.sender_id
-    page.send(recipient_id=sender_id,message=str(payload))
+    news_objects=news.get_news(sources=payload)
+    page.send(recipient_id=sender_id,Template.Generic(elements=news_objects))
