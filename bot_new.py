@@ -12,6 +12,10 @@ def handle_allActions(sender,action,ai_reply):
     if action=='action.getNews':
         smart_object=qr.get_news_quick_reply()
         page.send(recipient_id=sender, message='Choose any one of these sources:',quick_replies=smart_object)
+    else if action=='smalltalk.greetings.hello':
+        quickreply_mini=[QuickReply('news',payload='news_hello')]
+        message_ai=ai_reply['result']['fulfillment']['speech']
+        page.send(recipient_id=sender,message=message_ai+'! Click on the button belowl, or you can simply text Hey!What is the news?',quick_replies=quickreply_mini)
     else:
         reply=ai_reply['result']['fulfillment']['speech']
         if reply is None or reply=="":
@@ -62,5 +66,9 @@ def handle_verification():
 @page.callback(qr.quickreplies)
 def callback_picked_quickreply(payload,event):
     sender_id=event.sender_id
-    news_objects=news.get_news(sources=payload)
-    page.send(sender_id,Template.Generic(elements=news_objects))
+    if payload=='news_hello':
+        smart_object=qr.get_news_quick_reply()
+        page.send(recipient_id=sender_id, message='Choose any one of these sources:',quick_replies=smart_object)
+    else:
+        news_obj=news.get_news(payload)
+        page.send(sender_id,Template.Generic(news_obj))
