@@ -8,7 +8,7 @@ def get_news(sources):
     info=articles.get(source=sources)
     news_array=[]
     news_objects=[]
-    for i in range(0,10):
+    for i in range(0,5):
         headline=info['articles'][i]['title']
         body=info['articles'][i]['description']
         url_web=info['articles'][i]['url']
