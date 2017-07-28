@@ -8,7 +8,7 @@ def get_news_quick_reply():
     QuickReply(title='business-insider',payload='business-insider'),QuickReply(title='bbc-news',payload='bbc-news'),
     QuickReply(title='cnbc',payload='cnbc'),QuickReply(title='hacker-news',payload='hacker-news'),
     QuickReply(title='techcrunch',payload='techcrunch'),QuickReply(title='talksport',payload='talksport'),
-    QuickReply(title='google-news',payload='google-news'),QuickReply(title='national-geographic'),
+    QuickReply(title='google-news',payload='google-news'),QuickReply(title='national-geographic',payload='national-geographic'),
     QuickReply(title='the-next-web',payload='the-next-web'),QuickReply(title='the-verge',payload='the-verge'),
     QuickReply(title='ign',payload='ign'),QuickReply(title='the-hindu',payload='the-hindu'),
     QuickReply(title='the-times-of-india',payload='the-times-of-india')]
