@@ -15,7 +15,7 @@ def handle_allActions(sender,action,ai_reply):
     elif action=='smalltalk.greetings.hello':
         quickreply_mini=[QuickReply('news',payload='news_hello')]
         message_ai=ai_reply['result']['fulfillment']['speech']
-        page.send(recipient_id=sender,message=message_ai+'! Click on the button belowl, or you can simply text Hey!What is the news?',quick_replies=quickreply_mini)
+        page.send(recipient_id=sender,message=message_ai+'! Click on the button below, or you can simply text What is the news?',quick_replies=quickreply_mini)
     else:
         reply=ai_reply['result']['fulfillment']['speech']
         if reply is None or reply=="":
