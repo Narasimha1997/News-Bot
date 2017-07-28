@@ -14,7 +14,7 @@ def handle_allActions(sender,action,ai_reply):
         page.send(recipient_id=sender, message='Choose any one of these sources:',quick_replies=smart_object)
     else:
         reply=ai_reply['result']['fulfillment']['speech']
-        if reply is not None or reply=="":
+        if reply is None or reply=="":
             reply="Okay"
             page.send(recipient_id=sender,message=reply)
 
