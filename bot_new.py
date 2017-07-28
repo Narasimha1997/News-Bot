@@ -85,7 +85,7 @@ def callback_picked_quickreply(payload,event):
         smart_object=qr.get_news_quick_reply()
         page.send(recipient_id=sender_id, message='Choose any one of these sources:',quick_replies=smart_object)
     elif payload=='weather_hello':
-        smart_object=[{'content_type':'location'}]
+        smart_object=[{'content_type':'location','title':'Location'}]
         page.send(recipient_id=sender_id,message='Where?',quick_replies=smart_object)
     else:
         news_obj=news.get_news(payload)
