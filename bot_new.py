@@ -8,6 +8,7 @@ app=Flask(__name__)
 
 page=Page(page_access_token='EAAa7BshAslQBAAm0V8gZCA9dwlFjZC5bD5YYkhasmZBZC0nO2CMLV1K9aJY5r9VTFa6slwBQLGb1su8vhyoOLldsqKeYddHw7lP34fGJRHbWi0LXKotZCSKzP1djDp1FzR4X5oMmJk4iCYvIp60Ab5JVtMAIJGK1rScZAb4Caws78K2ueQdbEl')
 
+
 def handle_allActions(sender,action,ai_reply):
     if action=='action.getNews':
         smart_object=qr.get_news_quick_reply()
@@ -62,6 +63,11 @@ def handle_verification():
   else:
     print("Verification failed!")
     return 'Error, wrong validation token'
+
+def store(sender,flag=False):
+    sender=sender
+    if flag is True:
+        return sender
 
 @page.callback(qr.quickreplies)
 def callback_picked_quickreply(payload,event):
