@@ -45,14 +45,13 @@ def message_handler(event):
     sender_id = event.sender_id
     messages = event.message_text
     answer=getAnswer(messages)
-    if answer is None:
-        return
-    if 'action' in answer['result']:
-        handle_allActions(sender=sender_id, action=answer['result']['action'],ai_reply=answer)
-    else:
-        reply=answer['result']['fulfillment']['speech']
-        if reply is None or reply=="":
-            reply='Okay'
+    if 'result' in answer:
+        if 'action' in answer['result']
+           handle_allActions(sender=sender_id, action=answer['result']['action'],ai_reply=answer)
+        else:
+            reply=answer['result']['fulfillment']['speech']
+            if reply is None or reply=="":
+                reply='Okay'
         page.send(recipient_id=sender_id,message=reply)
 
 @page.after_send
