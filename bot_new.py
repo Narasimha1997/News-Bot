@@ -52,7 +52,7 @@ def message_handler(event):
             reply=answer['result']['fulfillment']['speech']
             if reply is None or reply=="":
                 reply='Okay'
-        page.send(recipient_id=sender_id,message=reply)
+            page.send(recipient_id=sender_id,message=reply)
 
 @page.after_send
 def after_send(payload,response):
