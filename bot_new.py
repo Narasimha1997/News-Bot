@@ -30,7 +30,9 @@ def getAnswer(inputs):
     req.lang='en'
     req.session_id='tom'
     req.query=inputs
-    return json.loads(req.getresponse().read().decode('utf-8'))
+    data_di=json.loads(req.getresponse().read().decode('utf-8'))
+    if 'result' in data_di:
+        return data_di
 
 @app.route('/bot',methods=['POST'])
 def handle_webhook():
@@ -41,7 +43,8 @@ def handle_webhook():
 def message_handler(event):
     sender_id = event.sender_id
     messages = event.message_text
-    answer=getAnswer(messages)
+    if message_text!="" or message_text is not None:
+        answer=getAnswer(messages) mo
     if 'action' in answer['result']:
         handle_allActions(sender=sender_id, action=answer['result']['action'],ai_reply=answer)
     else:
