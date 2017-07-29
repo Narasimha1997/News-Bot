@@ -43,7 +43,7 @@ def handle_webhook():
 def message_handler(event):
     sender_id = event.sender_id
     messages = event.message_text
-    if message_text!="" or message_text is not None:
+    if messages!="" or message_text is not None:
         answer=getAnswer(messages)
     if 'action' in answer['result']:
         handle_allActions(sender=sender_id, action=answer['result']['action'],ai_reply=answer)
