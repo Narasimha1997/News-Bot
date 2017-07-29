@@ -46,7 +46,7 @@ def message_handler(event):
     messages = event.message_text
     answer=getAnswer(messages)
     if 'result' in answer:
-        if 'action' in answer['result']
+        if 'action' in answer['result']:
            handle_allActions(sender=sender_id, action=answer['result']['action'],ai_reply=answer)
         else:
             reply=answer['result']['fulfillment']['speech']
