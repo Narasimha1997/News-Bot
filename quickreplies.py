@@ -1,6 +1,6 @@
 from fbmq import QuickReply
 
-quickreplies=['news_hello','bloomberg','cnn','business-insider','bbc-news','cnbc','hacker-news','techcrunch','talksport','google-news','national-geographic','the-times-of-india']
+quickreplies=['weather','news_hello','bloomberg','cnn','business-insider','bbc-news','cnbc','hacker-news','techcrunch','talksport','google-news','national-geographic','the-times-of-india']
 
 def get_news_quick_reply():
     return [QuickReply(title='bloomberg',payload='bloomberg'),QuickReply(title='cnn',payload='cnn'),
