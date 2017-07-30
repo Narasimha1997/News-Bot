@@ -15,7 +15,7 @@ def handle_allActions(sender,action,ai_reply):
         smart_object=qr.get_news_quick_reply()
         page.send(recipient_id=sender, message='Choose any one of these sources:',quick_replies=smart_object)
     elif action=='smalltalk.greetings.hello':
-        quickreply_mini=[QuickReply('news',payload='news_hello'),QuickReply(title='weather',payload='weather')]
+        quickreply_mini=[QuickReply(title='news',payload='news_hello'),QuickReply(title='weather',payload='weather')]
         message_ai=ai_reply['result']['fulfillment']['speech']
         page.send(recipient_id=sender,message=message_ai+'! Click on the button below, or you can simply text What is the news? For info on weather tap on weather',quick_replies=quickreply_mini)
     elif action=='action.getWeather':
@@ -84,9 +84,13 @@ def callback_picked_quickreply(payload,event):
     if payload=='news_hello':
         smart_object=qr.get_news_quick_reply()
         page.send(recipient_id=sender_id, message='Choose any one of these sources:',quick_replies=smart_object)
-    elif payload=='weather':
-        message_howto="You can ask for weather in the following ways:\nHey! What's the weather in Bangalore? or just weather in Bangalore or How is the weather in Bangalore?\n You can replace Bangalore with the city name you want\n"
-        page.send(recipient_id=sender_id,message=message_howto)
+
     else:
         news_obj=news.get_news(payload)
         page.send(sender_id,Template.Generic(news_obj))
+
+@page.callback(['weather'])
+def callback_weather(payload,event):
+    sender_id=event.sender_id
+    message_howto="You can ask for weather in the following ways:\nHey! What's the weather in Bangalore? or just weather in Bangalore or How is the weather in Bangalore?\n You can replace Bangalore with the city name you want\n"
+    page.send(recipient_id=sender_id,message=message_howto)
