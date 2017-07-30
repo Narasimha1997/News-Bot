@@ -15,7 +15,7 @@ def get_weather(location):
         predict_string="And, It might rain tomorrow"
     else:
         predict_string="And, It might be sunny tomorrow"
-    temp_string="Weather Report:\nTemperature: (in celsius) \n----\nCurrent:"+str(t['temp'])+'\tMinimun: '+str(t['temp_min'])+'\tMaximum: '+str(t['temp_max'])
+    temp_string="Weather Report:\nTemperature: (in celsius) \n----\nCurrent:"+str(t['temp'])+'  Minimun: '+str(t['temp_min'])+'  Maximum: '+str(t['temp_max'])
     hum_String="\nHumidity: "+str(h)
     wind_string="\nWind\n----\nSpeed: "+str(w['speed'])+'\tDegree: '+str(w['deg'])+'\n'+predict_string
     main_string=temp_string+hum_String+wind_string

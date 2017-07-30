@@ -17,7 +17,7 @@ def handle_allActions(sender,action,ai_reply):
     elif action=='smalltalk.greetings.hello':
         quickreply_mini=[QuickReply('news',payload='news_hello'),QuickReply(title='weather',payload='weather')]
         message_ai=ai_reply['result']['fulfillment']['speech']
-        page.send(recipient_id=sender,message=message_ai+'! Click on the button below, or you can simply text What is the news?',quick_replies=quickreply_mini)
+        page.send(recipient_id=sender,message=message_ai+'! Click on the button below, or you can simply text What is the news? For info on weather tap on weather',quick_replies=quickreply_mini)
     elif action=='action.getWeather':
         if 'cityName' in ai_reply['result']['parameters']:
             city=ai_reply['result']['parameters']['cityName']
