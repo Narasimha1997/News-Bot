@@ -4,6 +4,7 @@ import apiai
 import json
 import quickreplies as qr
 import news
+import weather as w
 app=Flask(__name__)
 
 page=Page(page_access_token='EAAa7BshAslQBAAm0V8gZCA9dwlFjZC5bD5YYkhasmZBZC0nO2CMLV1K9aJY5r9VTFa6slwBQLGb1su8vhyoOLldsqKeYddHw7lP34fGJRHbWi0LXKotZCSKzP1djDp1FzR4X5oMmJk4iCYvIp60Ab5JVtMAIJGK1rScZAb4Caws78K2ueQdbEl')
@@ -14,9 +15,13 @@ def handle_allActions(sender,action,ai_reply):
         smart_object=qr.get_news_quick_reply()
         page.send(recipient_id=sender, message='Choose any one of these sources:',quick_replies=smart_object)
     elif action=='smalltalk.greetings.hello':
-        quickreply_mini=[QuickReply('news',payload='news_hello')]
+        quickreply_mini=[QuickReply('news',payload='news_hello'),QuickReply(title='weather',payload='weather')]
         message_ai=ai_reply['result']['fulfillment']['speech']
         page.send(recipient_id=sender,message=message_ai+'! Click on the button below, or you can simply text What is the news?',quick_replies=quickreply_mini)
+    elif action=='action.getWeather':
+        if 'cityName' in ai_reply['result']['parameters']:
+            city=ai_reply['result']['parameters']['cityName']
+            page.send(recipient_id=sender,message=w.get_weather(city))
     else:
         reply=ai_reply['result']['fulfillment']['speech']
         if reply is None or reply=="":
@@ -79,6 +84,9 @@ def callback_picked_quickreply(payload,event):
     if payload=='news_hello':
         smart_object=qr.get_news_quick_reply()
         page.send(recipient_id=sender_id, message='Choose any one of these sources:',quick_replies=smart_object)
+    elif payload=='weather':
+        message_howto="You can ask for weather in the following ways:\nHey! What's the weather in Bangalore? or just weather in Bangalore or How is the weather in Bangalore?\n You can replace Bangalore with the city name you want\n"
+        page.send(recipient_id=sender_id,message=message_howto)
     else:
         news_obj=news.get_news(payload)
         page.send(sender_id,Template.Generic(news_obj))
